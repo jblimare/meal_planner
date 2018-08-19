@@ -12,3 +12,9 @@ def recipes(request):
     recipes = Recipe.objects.order_by('name')
     context = {'recipes' : recipes}
     return render(request, 'meal_planners/recipes.html', context)
+
+def recipe(request, recipe_id):
+    """Show a single recipe and its description"""
+    recipe = Recipe.objects.get(id=recipe_id)
+    context = {'recipe': recipe}
+    return render(request, 'meal_planners/recipe.html', context)
