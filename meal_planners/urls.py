@@ -12,5 +12,7 @@ urlpatterns = [
     # Recipes page
     path('recipes/', views.recipes, name = 'recipes'),
 
+    # Detailed page for each recipe
+    path('recipes/<int:recipe_id>/', views.recipe, name = 'recipe'),
 ]
 
