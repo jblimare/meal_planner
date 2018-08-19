@@ -4,14 +4,18 @@
    
     <p>Recipes</p>
 
-    <ul>
+    <table>
+        <tr>
+            <th>Recipe Name</th>
+            <th>Description</th>
+        </tr>
+        
         {% for recipe in recipes %}
-            <li>
-                <a href="{% url 'meal_planners:recipe' recipe.id %}">{{ recipe }}</a>
-            </li>
-        {% empty %}
-            <li>No recipe added yet</li>
+            <tr>
+                <td><a href="{% url 'meal_planners:recipe' recipe.id %}">{{ recipe }}</a></td>
+                <td>{{ recipe.description|linebreaks }}</td>
+            </tr>
         {% endfor %}
-    </ul>
-
+        
+    </table>
 {% endblock content %}
