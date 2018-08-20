@@ -16,6 +16,5 @@ def recipes(request):
 def recipe(request, recipe_id):
     """Show a single recipe and its description"""
     recipe = Recipe.objects.get(id=recipe_id)
-    description = recipe.description
-    context = {'recipe': recipe, 'description': description}
+    context = {'recipe': recipe}
     return render(request, 'meal_planners/recipe.html', context)
