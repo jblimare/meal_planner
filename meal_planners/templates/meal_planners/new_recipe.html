@@ -1,0 +1,11 @@
+{%extends "meal_planners/base.html" %}
+
+{% block content %}
+    <p>Add a new recipe</p>
+    <form action="{%url 'meal_planners:new_recipe' %}" method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button name="submit">add recipe</button>
+    </form>
+    
+{% endblock content %}
