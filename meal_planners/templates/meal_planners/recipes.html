@@ -7,13 +7,16 @@
     <table>
         <tr>
             <th>Recipe Name</th>
-            <th>Description</th>
         </tr>
         
         {% for recipe in recipes %}
             <tr>
                 <td><a href="{% url 'meal_planners:recipe' recipe.id %}">{{ recipe }}</a></td>
-                <td>{{ recipe.description|linebreaks }}</td>
+            </tr>
+
+        {% empty %}
+            <tr>
+                <td>No recipe added yet</td>
             </tr>
         {% endfor %}
         

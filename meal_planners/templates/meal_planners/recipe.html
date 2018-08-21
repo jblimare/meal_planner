@@ -5,6 +5,10 @@
     <p>Recipe: {{ recipe }}</p>
 
     <p>Description:</p>
-    <p>{{ recipe.description|linebreaks }}</p>
+    {% for description in descriptions %}
+        <p>{{ description.text|linebreaks }}</p>
+    {% empty %}
+        <p>No description for this recipe</p>
+    {% endfor %}
 
 {% endblock content %}
