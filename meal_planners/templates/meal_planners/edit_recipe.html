@@ -1,0 +1,12 @@
+{%extends "meal_planners/base.html" %}
+
+{% block content %}
+
+    <p>Edit Recipe</p>
+    <form action="{% url 'meal_planners:edit_recipe' recipe.id %}" method = 'post'>
+        {% csrf_token %}
+        {{% form.as_p %}}
+        <button name = "submit">save changes</button>
+    </form>
+
+{% endblock content %}

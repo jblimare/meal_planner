@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
-from .models import Recipe
+from .models import Recipe, Description
 from .forms import RecipeForm, DescriptionForm
 
 # Create your views here.
@@ -26,7 +26,7 @@ def recipe(request, recipe_id):
 
 def new_recipe(request):
     """Add a new recipe"""
-    # Cannot several forms on the recipe creation page as all children forms (description, labels...) require a recipe_id that is only assigned after recipe description
+    # Cannot add several forms on the recipe creation page as all children forms (description, labels...) require a recipe_id that is only assigned after recipe description
     if request.method != 'POST':
         # No data submitted, create a blank form to start creating a new recipe
         form = RecipeForm()
@@ -59,3 +59,30 @@ def new_recipe_details(request, recipe_id):
 
     context = {'recipe': recipe, 'form1': form1}
     return render (request, 'meal_planners/new_recipe_details.html', context)
+
+def edit_recipe(request, recipe_id):
+    """Edit an existing recipe"""
+    print("1")
+    description = Description.objects.get(id=recipe_id)
+    recipe = description.recipe
+    print("Recipe id = "+ str(recipe_id))
+    print(description)
+    print("2")
+
+    if request.method != 'POST':
+        # Initial request, view the forms with the current recipe
+        print("3")
+        print("4")
+        form = DescriptionForm(instance = description)
+        print(description)
+        print("5")
+
+    else:
+        # Post data to update the recipe
+        form = DescriptionForm(instance = description, data=request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('meal_planners:recipe', args=[recipe_id]))
+
+    context = {'recipe': recipe, 'description': description, 'form': form}
+    return render(request, 'meal_planners/edit_recipe.html', context)
