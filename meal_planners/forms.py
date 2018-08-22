@@ -12,4 +12,4 @@ class DescriptionForm(forms.ModelForm):
     class Meta:
         model = Description
         fields = ['text']
-        labels = {'text': ''}
+        labels = {'text':''}

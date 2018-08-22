@@ -2,7 +2,7 @@
 
 {% block content %}
 
-    <p><a href="{% url 'meal_planners:recipe' recipe_id %}">{{ recipe }}</a></p>
+    <p>{{ recipe }}</p>
 
     <p>Add a description for your recipe</p>
     <form action="{% url 'meal_planners:new_recipe_details' recipe.id %}" method = 'POST'>
