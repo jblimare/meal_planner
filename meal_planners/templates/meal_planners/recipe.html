@@ -4,9 +4,8 @@
    
     <p>Recipe: {{ recipe }}</p>
 
-    <p>Description:</p>
     {% for description in descriptions %}
-        <p>{{ description.text|linebreaks }}</p>
+        <p>Description: {{ description.text|linebreaks }}</p>
     {% empty %}
         <p>No description for this recipe</p>
     {% endfor %}
