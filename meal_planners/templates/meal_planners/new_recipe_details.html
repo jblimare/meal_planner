@@ -1,0 +1,14 @@
+{%extends "meal_planners/base.html" %}
+
+{% block content %}
+
+    <p><a href="{% url 'meal_planners:recipe' recipe_id %}">{{ recipe }}</a></p>
+
+    <p>Add a description for your recipe</p>
+    <form action="{% url 'meal_planners:new_recipe_details' recipe.id %}" method = 'POST'>
+        {% csrf_token %}
+        {{ form1.as_p }}
+        <button name = 'submit'>Add details</button>
+    </form>
+
+{% endblock content %}
