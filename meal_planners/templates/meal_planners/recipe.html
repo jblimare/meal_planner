@@ -11,6 +11,9 @@
         </p>
     {% empty %}
         <p>No description for this recipe</p>
+        <p>
+            <a href="{% url 'meal_planners:new_recipe_details' recipe.id %}">Add recipe details</a>
+        </p>
     {% endfor %}
 
 {% endblock content %}
