@@ -62,20 +62,12 @@ def new_recipe_details(request, recipe_id):
 
 def edit_recipe(request, recipe_id):
     """Edit an existing recipe"""
-    print("1")
-    description = Description.objects.get(id=recipe_id)
+    description = Description.objects.get(recipe_id=recipe_id)
     recipe = description.recipe
-    print("Recipe id = "+ str(recipe_id))
-    print(description)
-    print("2")
 
     if request.method != 'POST':
         # Initial request, view the forms with the current recipe
-        print("3")
-        print("4")
         form = DescriptionForm(instance = description)
-        print(description)
-        print("5")
 
     else:
         # Post data to update the recipe
