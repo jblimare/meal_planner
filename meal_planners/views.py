@@ -62,19 +62,23 @@ def new_recipe_details(request, recipe_id):
 
 def edit_recipe(request, recipe_id):
     """Edit an existing recipe"""
+    name = Recipe.objects.get(id = recipe_id)
     description = Description.objects.get(recipe_id=recipe_id)
     recipe = description.recipe
 
     if request.method != 'POST':
         # Initial request, view the forms with the current recipe
-        form = DescriptionForm(instance = description)
+        form1 = RecipeForm(instance = name)
+        form2 = DescriptionForm(instance = description)
 
     else:
         # Post data to update the recipe
-        form = DescriptionForm(instance = description, data=request.POST)
-        if form.is_valid():
-            form.save()
+        form1 = RecipeForm(instance = name, data=request.POST)
+        form2 = DescriptionForm(instance = description, data=request.POST)
+        if form1.is_valid() and form2.is_valid():
+            form1.save()
+            form2.save()
             return HttpResponseRedirect(reverse('meal_planners:recipe', args=[recipe_id]))
 
-    context = {'recipe': recipe, 'description': description, 'form': form}
+    context = {'name': name, 'recipe': recipe, 'description': description, 'form1': form1, 'form2': form2}
     return render(request, 'meal_planners/edit_recipe.html', context)

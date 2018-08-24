@@ -3,11 +3,17 @@
 {% block content %}
 
     <p>Edit Recipe</p>
-    <p>{{ recipe }}</p>
+    <p>Name: {{ recipe }}</p>
+    <p>Description: 
     <form action="{% url 'meal_planners:edit_recipe' recipe.id %}" method = 'post'>
         {% csrf_token %}
-        {{ form.as_p }}
+        {{ form1.as_p }}
+        {{ form2.as_p }}
         <button name = "submit">save changes</button>
     </form>
+    <form action="{% url 'meal_planners:recipe' recipe.id %}">
+        <input type="submit" value="cancel" />
+    </form>
+    </p>
 
 {% endblock content %}
