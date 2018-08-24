@@ -20,5 +20,8 @@ urlpatterns = [
 
     # Page for adding details of a recipe (description, labels...)
     path('recipes/new_recipe/<int:recipe_id>/', views.new_recipe_details, name = 'new_recipe_details'),
+
+    # Page for editing an existing recipe
+    path('recipes/edit_recipe/<int:recipe_id>/', views.edit_recipe, name = 'edit_recipe'),
 ]
 
