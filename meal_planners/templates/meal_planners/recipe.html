@@ -15,5 +15,10 @@
             <a href="{% url 'meal_planners:new_recipe_details' recipe.id %}">Add recipe details</a>
         </p>
     {% endfor %}
+    
+    <form action="{% url 'meal_planners:delete_recipe' recipe.id %}" method="POST">
+        {% csrf_token %}
+        <input type="submit" value="Delete recipe"/>
+      </form>
 
 {% endblock content %}

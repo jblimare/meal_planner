@@ -23,5 +23,8 @@ urlpatterns = [
 
     # Page for editing an existing recipe
     path('recipes/edit_recipe/<int:recipe_id>/', views.edit_recipe, name = 'edit_recipe'),
+
+    # URL to delete recipe
+    path('recipes/delete_recipe/<int:recipe_id>/', views.delete_recipe, name = 'delete_recipe')
 ]
 

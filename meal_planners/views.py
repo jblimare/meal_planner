@@ -82,3 +82,17 @@ def edit_recipe(request, recipe_id):
 
     context = {'name': name, 'recipe': recipe, 'description': description, 'form1': form1, 'form2': form2}
     return render(request, 'meal_planners/edit_recipe.html', context)
+
+def delete_recipe(request, recipe_id):
+    """Delete a recipe"""
+    if request.method == 'POST':
+        name = Recipe.objects.get(id = recipe_id)
+        description = Description.objects.get(recipe_id=recipe_id)
+        recipe = description.recipe
+
+        description.delete()
+        name.delete()
+        return HttpResponseRedirect (reverse('meal_planners:recipes'))
+       
+    context = {'name': name, 'description': description, 'recipe': recipe}
+    return render(request, 'meal_planners/recipes.html', context)
