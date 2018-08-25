@@ -1,0 +1,18 @@
+{% extends 'meal_planners/base.html' %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <p> Hello, {{ user.username }}. You are already logged in. Please log out first if you want to register a new account.</p>
+
+    {% else %}
+        <form method='post' action="{% url 'users:register' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            <button name="submit">register</button>
+            <input type="hidden" name = "next" value = "{ url 'meal_planners:index' %}"/>
+        </form>
+
+    {% endif %}
+
+{% endblock content %}

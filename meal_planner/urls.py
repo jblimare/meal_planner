@@ -19,5 +19,6 @@ from meal_planners import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('meal_planners.urls'))
+    path('', include('meal_planners.urls')),
+    path('users/', include('users.urls')),
 ]

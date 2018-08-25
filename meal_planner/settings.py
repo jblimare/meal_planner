@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     # My apps
     'meal_planners',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -151,3 +152,7 @@ if cwd == '/app' or cwd[:4] == '/tmp':
     )
 
     STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+
+
+# My settings
+LOGOUT_REDIRECT_URL = '/'
