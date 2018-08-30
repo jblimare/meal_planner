@@ -1,6 +1,7 @@
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
 
 from .models import Recipe, Description
 from .forms import RecipeForm, DescriptionForm
@@ -11,19 +12,27 @@ def index(request):
     """The home page for Meal Planner"""
     return render(request, 'meal_planners/index.html')
 
+@login_required
 def recipes(request):
     """Show all recipes"""
-    recipes = Recipe.objects.order_by('name')
+    recipes = Recipe.objects.filter(owner=request.user).order_by('name')
     context = {'recipes' : recipes}
     return render(request, 'meal_planners/recipes.html', context)
 
+@login_required
 def recipe(request, recipe_id):
     """Show a single recipe and its description"""
     recipe = Recipe.objects.get(id=recipe_id)
+
+    # Make sure the recipe belongs to the current user
+    if recipe.owner != request.user:
+        raise Http404
+
     descriptions = recipe.description_set.all()
     context = {'recipe': recipe, 'descriptions': descriptions}
     return render(request, 'meal_planners/recipe.html', context)
 
+@login_required
 def new_recipe(request):
     """Add a new recipe"""
     # Cannot add several forms on the recipe creation page as all children forms (description, labels...) require a recipe_id that is only assigned after recipe description
@@ -34,16 +43,23 @@ def new_recipe(request):
         # New recipe submitted via POST method, process data
         form = RecipeForm(data=request.POST)
         if form.is_valid():
-            new_recipe = form.save()
+            new_recipe = form.save(commit=False)
+            new_recipe.owner = request.user
+            new_recipe.save()
             return HttpResponseRedirect(reverse('meal_planners:new_recipe_details', args=[new_recipe.pk]))
 
     context = {'form': form}
     return render (request, 'meal_planners/new_recipe.html', context)
 
+@login_required
 def new_recipe_details(request, recipe_id):
     """Add a new description to a recipe that has just been created"""
     # Can add several forms on the same page: description, labels,... by using form1, form2 and so on as long as we receive recipe_id
     recipe = Recipe.objects.get(id=recipe_id)
+
+    # Make sure the recipe belongs to the current user
+    if recipe.owner != request.user:
+        raise Http40
 
     if request.method != 'POST':
         # No data available, create a blank form. 
@@ -60,11 +76,16 @@ def new_recipe_details(request, recipe_id):
     context = {'recipe': recipe, 'form1': form1}
     return render (request, 'meal_planners/new_recipe_details.html', context)
 
+@login_required
 def edit_recipe(request, recipe_id):
     """Edit an existing recipe"""
     name = Recipe.objects.get(id = recipe_id)
     description = Description.objects.get(recipe_id=recipe_id)
     recipe = description.recipe
+
+    # Make sure the recipe belongs to the current user
+    if recipe.owner != request.user:
+        raise Http40
 
     if request.method != 'POST':
         # Initial request, view the forms with the current recipe
@@ -83,6 +104,7 @@ def edit_recipe(request, recipe_id):
     context = {'name': name, 'recipe': recipe, 'description': description, 'form1': form1, 'form2': form2}
     return render(request, 'meal_planners/edit_recipe.html', context)
 
+@login_required
 def delete_recipe(request, recipe_id):
     """Delete a recipe"""
     if request.method == 'POST':
