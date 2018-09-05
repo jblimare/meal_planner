@@ -25,6 +25,9 @@ urlpatterns = [
     path('recipes/edit_recipe/<int:recipe_id>/', views.edit_recipe, name = 'edit_recipe'),
 
     # URL to delete recipe
-    path('recipes/delete_recipe/<int:recipe_id>/', views.delete_recipe, name = 'delete_recipe')
+    path('recipes/delete_recipe/<int:recipe_id>/', views.delete_recipe, name = 'delete_recipe'),
+
+    # URL for the recipes picker
+    path('recipes_picker/', views.get_random_recipe, name = 'recipes_picker'),
 ]
 

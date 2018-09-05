@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 
 from .models import Recipe, Description
 from .forms import RecipeForm, DescriptionForm
-
+from .recipes_picker import random_recipe
 # Create your views here.
 
 def index(request):
@@ -118,3 +118,13 @@ def delete_recipe(request, recipe_id):
        
     context = {'name': name, 'description': description, 'recipe': recipe}
     return render(request, 'meal_planners/recipes.html', context)
+
+@login_required
+def get_random_recipe(request):
+    """Return a random recipe"""
+    days = range(0,7)
+    random_recipe()
+    
+    context = {'random_recipe': random_recipe, 'days': days}
+    return render(request, 'meal_planners/recipes_picker.html', context)
+

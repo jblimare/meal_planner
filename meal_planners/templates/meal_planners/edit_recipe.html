@@ -14,10 +14,6 @@
     <form action="{% url 'meal_planners:recipe' recipe.id %}">
         <input type="submit" value="cancel" />
     </form>
-    <form action="{% url 'meal_planners:delete_recipe' recipe.id %}" method="POST">
-        {% csrf_token %}
-        <input type="submit" value="Delete recipe"/>
-      </form>
     </p>
 
 {% endblock content %}

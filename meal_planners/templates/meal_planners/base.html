@@ -1,6 +1,7 @@
 <p>
     <a href="{% url 'meal_planners:index' %}">Meal Planner</a>
-    <a href="{% url 'meal_planners:recipes' %}">Recipes</a> -
+    <a href="{% url 'meal_planners:recipes' %}">Recipes</a>
+    <a href="{% url 'meal_planners:recipes_picker' %}">Recipe picker</a> -
     {% if user.is_authenticated %}
         Hello, {{ user.username }}.
         <a href="{% url 'users:logout' %}">log out</a>

@@ -156,3 +156,4 @@ if cwd == '/app' or cwd[:4] == '/tmp':
 
 # My settings
 LOGOUT_REDIRECT_URL = '/'
+LOGIN_URL = '/users/login'
